@@ -56,5 +56,6 @@ This review skill acts as the final quality gate that orchestrates and validates
 - **use-project-theme**: Enforce complete design token coverage and reject any hardcoded hex codes.
 - **common-components**: Enforce the reuse of shared buttons, inputs, dividers, and alert boxes, preventing custom duplicates.
 - **fe-gen-screen**: Check component decomposition, responsive behavior limits, scroll container safety, and safe area handling.
+- **fix-screen-ui**: Verify spacing adjustments, typography mappings, and layout alignment fixes adhere strictly to the selected Figma structure and style guidelines.
 - **fe-integrate-api**: Check asynchronous loading hook lifecycles, memory leak checks, and strict TS interfaces.
 

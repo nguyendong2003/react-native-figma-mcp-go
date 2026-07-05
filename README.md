@@ -1,56 +1,77 @@
-# Welcome to your Expo app 👋
+# React Native Figma MCP Go 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern React Native / Expo application built using Expo Router and styled with Tailwind CSS (via NativeWind v4). This project showcases high-fidelity Figma-to-code translation, featuring a pixel-perfect, responsive **Sign-in Screen** and a custom reusable UI components architecture.
 
-## Get started
+## 🚀 Features
 
-1. Install dependencies
+*   **Figma-to-Code Translation**: Extracted visual design tokens and coordinates directly from Figma frames using the `figma-mcp-go` protocol.
+*   **Design System Integration**: Fully configured color palettes, typography mappings (Poppins-based headings and body texts), and shadows.
+*   **NativeWind v4 (Tailwind)**: Leverages build-time styling transformations integrated via custom Metro configurations.
+*   **Modular Component Decomposition**:
+    *   **Global Common Components**: Shared, state-free controls (`Button`, `InputField`).
+    *   **Screen-Private Components**: Separated visual blocks (`SignInHeader`, `SignInIllustration`, `BiometricAuth`).
+*   **Responsive Layouts**: Constructed with safe area notch handling, keyboard avoiding wrappers, and fluid scroll panels to adapt gracefully to different screen heights.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 📁 Project Structure
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+react-native-figma-mcp-go/
+├── .agents/                    # Workspace custom agent skills (rules & behaviors)
+│   └── skills/
+│       ├── common-components   # Reusable controls guidelines
+│       ├── fe-gen-screen       # Layout generation workflow
+│       ├── fix-screen-ui       # UI adjustment & audit standards
+│       └── use-project-theme   # Theme color & typography mappings
+├── assets/                     # App icons and media assets
+├── src/
+│   ├── app/                    # File-based navigation routes
+│   │   ├── _layout.tsx         # Navigation provider wrapper
+│   │   ├── index.tsx           # Entry page (centered test launcher link)
+│   │   └── sign-in.tsx         # Figma Sign-in orchestrator & validation logic
+│   ├── components/             # Reusable UI controls
+│   │   ├── Button.tsx          # Configurable button (primary / link states)
+│   │   ├── InputField.tsx      # Text input (focus borders, password toggles)
+│   │   └── sign-in/            # Private widgets for the Sign-in route
+│   │       ├── BiometricAuth.tsx
+│   │       ├── SignInHeader.tsx
+│   │       └── SignInIllustration.tsx
+│   ├── constants/
+│   │   └── theme.ts            # Project design tokens (Colors, Typography)
+│   └── global.css              # Custom Tailwind component definitions
+├── metro.config.js             # NativeWind compiler bundler configuration
+├── tailwind.config.js          # Tailwind design tokens mapping
+└── package.json                # Project dependencies
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## 🛠️ Getting Started
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-## Learn more
+### 2. Start the Metro Server
+Restart your Expo server and clear the cache to ensure all Tailwind transformations apply correctly:
+```bash
+npx expo start --clear
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Open the App
+*   Press **`a`** to open on an Android emulator (requires Android SDK).
+*   Press **`i`** to open on an iOS simulator (macOS only).
+*   Press **`w`** to open in a web browser.
+*   Scan the terminal QR code using **Expo Go** on your physical iOS or Android device.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## 🎨 Theme Details
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+All components reference the central theme configuration:
+*   **Primary Brand Color**: `#3629B7` (`bg-primary-1` / `text-primary-1`)
+*   **Neutral Text Color**: `#343434` (`text-neutral-1`)
+*   **Shadow System**: Card shadows loaded via custom CSS classes (`shadow-card-1`, `shadow-card-2`).
+*   **Typography**: Headings use `text-title-1` (24px Poppins) and subtitles use `text-caption-2` (12px Poppins).

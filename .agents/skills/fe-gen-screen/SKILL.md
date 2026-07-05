@@ -113,5 +113,6 @@ src/
 - **use-project-theme**: Use this skill to map visual shapes, color styles, and fonts retrieved from Figma to NativeWind utility classes and theme constants.
 - **common-components**: Prioritize importing and extending generic elements (Buttons, InputFields) instead of coding them inline.
 - **naming-conventions**: Use this skill to name screens in kebab-case under `src/app/` and split private layouts in PascalCase.
+- **fix-screen-ui**: Used after screen generation to compare layout discrepancies line-by-line and correct styling or spacing errors to match the Figma design.
 - **fe-review-code**: Used to verify layout compliance, responsive safety limits, and component modularity before merging.
 

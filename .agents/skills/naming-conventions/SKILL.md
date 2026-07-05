@@ -65,5 +65,6 @@ Format:
 - **common-components**: Sets the folder organization rules: generic components belong directly under `src/components/`, while screen-private components are grouped by screen name.
 - **fe-gen-screen**: Determines screen file paths under `src/app/` (using lowercase kebab-case) and private screen components under `src/components/<screen-name>/`.
 - **fe-integrate-api**: Controls file and symbol naming rules for query hooks, API client utils, and type models.
+- **fix-screen-ui**: Ensures that filenames for any refactored private components under `src/components/<screen-name>/` follow correct casing rules.
 - **fe-review-code**: Used to audit file structure, naming casing, and Git branch/commit logs before closing tasks.
 

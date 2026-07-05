@@ -62,5 +62,6 @@ Key common components to maintain/reuse:
 - **use-project-theme**: Refer to this skill for color styles (e.g. `bg-primary-1`), text styles (e.g. `text-body-1`), and drop shadows (e.g. `shadow-card-1`) that should be set as default prop fallback values.
 - **naming-conventions**: Refer to this skill for correct casing naming convention (PascalCase for component files) and folder placements.
 - **fe-gen-screen**: Applied together when building screen layouts; standard buttons and text inputs should import and extend these common controls rather than coding layout overrides inline.
+- **fix-screen-ui**: Used to ensure global buttons, input fields, dividers, and loading spinners are reused rather than replaced with raw or custom CSS code during alignment changes.
 - **fe-review-code**: Serves as the audit gate verifying that common components are reused and extended rather than rewritten.
 

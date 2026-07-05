@@ -96,6 +96,7 @@ When building screens:
 
 - **common-components**: Shared UI controls must consume this theme by default so that all brand buttons, input fields, loader spinners, and alert borders match the Figma design system out of the box.
 - **fe-gen-screen**: Provides the Tailwind class name mappings and style structures to use during design-to-code translation.
+- **fix-screen-ui**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants during alignment corrections.
 - **fe-review-code**: Used as the auditing standard to eliminate hardcoded hex codes or ad-hoc margins.
 
 
