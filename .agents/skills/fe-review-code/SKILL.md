@@ -11,9 +11,12 @@ This skill defines the criteria and checklist items for conducting code reviews 
 
 - **No Magic Colors or Styles**: Ensure there are no hardcoded hex codes (like `#3f51b5`) or ad-hoc styles in components. They must use either:
   - Theme utility classes (e.g., `bg-primary-1`, `text-neutral-3`, `shadow-card-1`).
-  - Core constants (e.g., `ThemeColors.primary[1]`, `ThemeTypography.title2`).
+  - Core constants (e.g., `ThemeColors.primary[1]`, `ThemeEffects.card1`).
+- **Typography Native Compatibility**: Verify that typography classNames are native-compatible. Avoid using custom utilities defined via CSS plugins (like `text-title-1`) which are ignored or buggy on native platforms. Ensure they use either explicit Tailwind inline configurations (e.g. `text-[24px] leading-[28px] font-poppins-semibold`) or `ThemeTypography` inline styles.
+- **No Conflicting Utilities**: Audit code to ensure that conflicting typography utility classes are never combined (e.g., combining `text-caption-2` which sets `Poppins-Medium` with `font-poppins-regular`).
 - **No Redundant Component Code**: Check if the code recreates generic elements (such as standard buttons, text inputs, spinners, or alert banners) from scratch. Ensure they import and extend the generic component versions from `src/components/` as mandated by the `common-components` skill.
 - **Responsive Layout Check**: Check that layouts do not use fixed width/height containers unless explicitly required (e.g. icons, avatars). Use flexbox classes (`flex-1`, `w-full`, `gap-4`) to ensure fluidity across devices.
+- **Mathematical Spacing Check**: Audit that all spacing between consecutive elements (gaps, margins) is mathematically calculated using bounding boxes: `gap = next.y - (prev.y + prev.height)`. Reject estimated or ad-hoc values.
 - **Local Icon Assets**: Verify that any icons/images used in the UI are registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image` for rendering), rather than using inline `require` statements, importing external vector icons, or using third-party packages.
 - **Import Order**:
 
@@ -27,7 +30,7 @@ This skill defines the criteria and checklist items for conducting code reviews 
 
 ## 2. TypeScript and Type Safety
 
-- **No Implicit/Explicit `any`**: Ensure all props, variables, functions, and API responses are typed properly. Use interfaces or type aliases.
+- **No `any` Types or Casts**: Using the `any` type is strictly prohibited. Do not use implicit/explicit `any` types, and never use `as any` type casting or assertions. All props, variables, functions, navigation options, and API responses must be properly typed using interfaces, type unions, generics, or specific standard types.
 - **Proper Prop Mappings**: Custom UI components must define a clear prop interface (e.g. `interface ButtonProps`). If extending native components, use `ComponentProps` (e.g. `React.ComponentProps<typeof Pressable>`).
 
 ---
@@ -55,8 +58,10 @@ This skill defines the criteria and checklist items for conducting code reviews 
 This review skill acts as the final quality gate that orchestrates and validates compliance with all other workspace skills:
 
 - **naming-conventions**: Audit casing rules (PascalCase vs. camelCase) and verify Git branch/commit conventions.
-- **use-project-theme**: Enforce complete design token coverage and reject any hardcoded hex codes.
-- **common-components**: Enforce the reuse of shared buttons, inputs, dividers, and alert boxes, preventing custom duplicates.
+- **use-project-theme**: Enforce complete design token coverage, reject any hardcoded hex codes, and verify typography compatibility.
+- **common-components**: Enforce the reuse of shared buttons, inputs, dividers, and alert boxes, preventing custom duplicates, and auditing dynamic margins.
 - **fe-gen-screen**: Check component decomposition, responsive behavior limits, scroll container safety, and safe area handling.
-- **fix-screen-ui**: Verify spacing adjustments, typography mappings, and layout alignment fixes adhere strictly to the selected Figma structure and style guidelines.
+- **fix-screen-ui**: Verify spacing adjustments, mathematical spacing, typography mappings, and layout alignment fixes adhere strictly to the selected Figma structure and style guidelines.
+- **fe-perfect-pixel**: Verify that the implemented screen/component is pixel-perfect with Figma styling parameters (exact font size, line height, margins, border radius, shadows) without breaking responsive flexibility constraints, using mathematical spacing and audited image file padding.
 - **fe-integrate-api**: Check asynchronous loading hook lifecycles, memory leak checks, and strict TS interfaces.
+

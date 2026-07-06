@@ -32,7 +32,7 @@ When tasked with generating a screen or component, use the following `figma-mcp-
 3. **Analyze Colors, Text & Effects**:
    - Call `get_styles` to inspect document paint, typography, or drop shadow style sheets.
 4. **Visual Reference**:
-   - Call `get_screenshot` with the screen frame's `id` to save a visual preview, allowing you to compare your generated code layout with the visual representation.
+    - Call `save_screenshots` with the screen frame's `id` to save a visual preview directly to disk in the allowed working folders, allowing you to compare your generated code layout with the visual representation.
 
 ---
 
@@ -44,6 +44,8 @@ When translating Figma designs, you must adhere to two concurrent goals: **1) Ex
 
 - **Reference Viewport**: Check the bounds (width/height) of the selected parent Figma frame (e.g., 375px width).
 - **Exact Sizing**: Font sizes, line heights, paddings (`p-`, `px-`, `py-`), margins (`m-`, `mx-`, `my-`), border radii, and item gaps must map _exactly_ to the Figma node values at this reference size.
+- **Mathematical Spacing**: Always calculate vertical spacing mathematically from bounding boxes: `gap = next.y - (prev.y + prev.height)`. Never estimate spacing; calculate it down to the exact pixel.
+- **Image/Icon Asset Padding**: Check for transparent padding inside image/icon PNG/SVG assets (using Python scripts to find the non-transparent bounding box). If the asset has transparent padding, its visual dimensions will be smaller than its bounding box. You must adjust its layout or margins, or crop the image to ensure pixel-perfect matching.
 - **Matching Colors & Effects**: Fills, text colors, borders, and shadows must use the exact theme equivalents (e.g., `bg-primary-1`, `text-neutral-1`, `shadow-card-1`).
 
 ### Responsive Adaptation Guidelines (For Other Device Dimensions)
@@ -65,7 +67,7 @@ When translating Figma designs, you must adhere to two concurrent goals: **1) Ex
    - Do not write inputs inline in the screen layout.
    - Extract inputs into modular files (e.g. `InputField.tsx` or `PasswordInput.tsx`). This allows the input to manage its own focus, password toggle state, and validation errors without re-rendering the whole page.
 2. **Header & Footer Areas**:
-   - Extract header titles, subheaders, back buttons, and progress indicators into a sub-component (e.g. `ScreenHeader.tsx`).
+   - Screen headers (back buttons, screen title, themes) must not be rendered inline on the screen. Instead, define them via Expo Router `Stack.Screen` options (`title`, `headerTheme`) in the layout navigator, allowing the global `<NavigationBar />` custom header to render automatically.
    - Extract actions and social sign-in lists (e.g. `SocialActions.tsx`).
 3. **Interactivity & Length**:
    - Any visual element with its own internal state or taking up more than 40 lines of code must be extracted.
@@ -90,12 +92,14 @@ The screen file under `src/app/` acts strictly as an orchestrator:
 src/
 ├── app/                        # Main Screen Pages
 │   └── sign-in.tsx             # State orchestrator & layout composer
+│   └── _layout.tsx             # Route config & global stack navigator
 └── components/                 # UI Components
     ├── Button.tsx              # Generic shared button
     ├── InputField.tsx          # Generic shared input
+    ├── NavigationBar.tsx       # Generic shared navigation bar
     └── sign-in/                # Private pieces for sign-in page
-        ├── SignInHeader.tsx    # Header texts and branding
-        └── SocialSignIn.tsx    # Facebook / Google action buttons
+        ├── SignInIllustration.tsx # Padlock graphics and circles
+        └── BiometricAuth.tsx   # Biometric verification trigger
 ```
 
 ---
@@ -103,7 +107,8 @@ src/
 ## 4. Platform & Design Best Practices
 
 - **ScrollView**: If a page contains forms or could overflow vertically on smaller mobile devices, use `<ScrollView className="flex-1 bg-neutral-6">` instead of a static `<View>`.
-- **SafeAreaView**: Wrap screen content in `SafeAreaView` from `react-native-safe-area-context` to avoid layout overlapping with status bars or notches.
+- **StatusBar & SafeAreaView**: Screens must not render a manual `<StatusBar />` or pad the top safe area if they utilize a navigator-managed header. The global `<NavigationBar />` automatically injects notch-safe top padding and sets the status bar style dynamically (`light` for dark `'black'` headerTheme, `dark` for light `'white'` headerTheme). Screen pages should simply wrap their layouts in `<SafeAreaView edges={['left', 'right', 'bottom']}>` to safeguard bottom and horizontal boundaries.
+- **TypeScript Type Safety**: All generated screen and component code must be strictly typed. Using `any` or `as any` type assertions is strictly prohibited. If third-party properties require flexible types, define specific type unions, index signatures, or generic interfaces instead of using `any`.
 - **TextInput Handling**: Wrap inputs inside keyboard-avoiding views (`KeyboardAvoidingView`) on iOS so inputs remain visible when the keyboard is active.
 - **Images**: Use standard React Native `Image` from `'react-native'` instead of `expo-image` to ensure that NativeWind `className` styling is recognized natively without extra configuration:
   ```typescript
@@ -113,27 +118,27 @@ src/
   ```
 - **Icons**: When a Figma design uses specific icons (e.g., Face ID, fingerprint, checkmarks, etc.), check if the corresponding asset file exists in the `assets/icons/` folder.
   - If a matching icon file exists (e.g., `assets/icons/faceid.png`, `assets/icons/fingerprint.png`), you **must** register it inside the central assets management file `src/constants/assets.ts` and import it (using standard React Native `Image` for rendering) rather than using inline `require` statements, custom shapes, or downloading external files.
-  - Example:
-    In `src/constants/assets.ts`:
-    ```typescript
-    export const IconAssets = {
-      fingerprint: require('@/assets/icons/fingerprint.png'),
-      faceId: require('@/assets/icons/faceid.png'),
-    } as const;
-    ```
-    In your component file:
-    ```typescript
-    import { IconAssets } from '@/constants/assets';
-    import { Image } from 'react-native';
-    <Image source={IconAssets.fingerprint} className="w-10 h-10" resizeMode="contain" tintColor={ThemeColors.primary[1]} />
-    ```
+- **Typography Native Compatibility**: React Native's NativeWind parser on iOS/Android does not reliably parse custom typography classes (like `text-title-1`) configured via CSS plugins. To ensure 100% pixel-perfect fonts on all devices, you must EITHER:
+  1. Apply standard Tailwind classes mapping font-size, line-height, and font-family explicitly:
+     - `text-title-1` -> `text-[24px] leading-[28px] font-poppins-semibold`
+     - `text-title-2` -> `text-[20px] leading-[28px] font-poppins-semibold`
+     - `text-title-3` -> `text-[16px] leading-[24px] font-poppins-semibold`
+     - `text-body-1` -> `text-[16px] leading-[24px] font-poppins-medium`
+     - `text-body-2` -> `text-[16px] leading-[24px] font-poppins-regular`
+     - `text-body-3` -> `text-[14px] leading-[21px] font-poppins-medium`
+     - `text-caption-1` -> `text-[12px] leading-[16px] font-poppins-semibold`
+     - `text-caption-2` -> `text-[12px] leading-[16px] font-poppins-medium`
+  2. Or use the TypeScript `ThemeTypography` styles directly in the `style` prop (e.g. `style={ThemeTypography.title1}`).
+  Never combine conflicting typography classes (e.g. `text-caption-2` which sets `Poppins-Medium` combined with `font-poppins-regular`). Use explicit standard Tailwind classes for custom styling instead of mixing conflicting utilities.
 
 ---
 
 ## 5. Skill Integration & Dependencies
 
-- **use-project-theme**: Use this skill to map visual shapes, color styles, and fonts retrieved from Figma to NativeWind utility classes and theme constants.
-- **common-components**: Prioritize importing and extending generic elements (Buttons, InputFields) instead of coding them inline.
+- **use-project-theme**: Use this skill to map visual shapes, color styles, and fonts retrieved from Figma to NativeWind utility classes and theme constants (including ThemeTypography / ThemeColors).
+- **common-components**: Prioritize importing and extending generic elements (Buttons, InputFields) instead of coding them inline. Make sure they dynamically handle margin overrides from `containerClassName`.
 - **naming-conventions**: Use this skill to name screens in kebab-case under `src/app/` and split private layouts in PascalCase.
 - **fix-screen-ui**: Used after screen generation to compare layout discrepancies line-by-line and correct styling or spacing errors to match the Figma design.
-- **fe-review-code**: Used to verify layout compliance, responsive safety limits, and component modularity before merging.
+- **fe-perfect-pixel**: Used after initial screen layout generation to fine-tune spacing, typography, dimensions, padding, colors, and borders to match the design down to the exact pixel using mathematical gaps and image padding checks.
+- **fe-review-code**: Used to verify layout compliance, responsive safety limits, component modularity, type safety, and typography classes before merging. safety limits, and component modularity before merging.
+

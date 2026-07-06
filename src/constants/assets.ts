@@ -1,6 +1,28 @@
 export const IconAssets = {
   fingerprint: require('@/assets/icons/fingerprint.png'),
   faceId: require('@/assets/icons/faceid.png'),
+  plus: require('@/assets/icons/plus.png'),
+  transferCard: require('@/assets/icons/transfer_card.png'),
+  wallet: require('@/assets/icons/wallet.png'),
+  arrowRight: require('@/assets/icons/arrow_right.png'),
+  tabHomeInactive: require('@/assets/icons/tab_home_inactive.png'),
+  tabSearchInactive: require('@/assets/icons/tab_search_inactive.png'),
+  tabMessageInactive: require('@/assets/icons/tab_message_inactive.png'),
+  tabSettingInactive: require('@/assets/icons/tab_setting_inactive.png'),
+  tabHomeActive: require('@/assets/icons/tab_home_active.png'),
+  tabSearchActive: require('@/assets/icons/tab_search_active.png'),
+  tabMessageActive: require('@/assets/icons/tab_message_active.png'),
+  tabSettingActive: require('@/assets/icons/tab_setting_active.png'),
+  flagVn: require('@/assets/icons/flag_vn.png'),
+  chevronDown: require('@/assets/icons/chevron_down.png'),
+  chevronRight: require('@/assets/icons/chevron_right.png'),
+  location: require('@/assets/icons/location.png'),
+  clear: require('@/assets/icons/clear.png'),
+  visaLogo: require('@/assets/icons/visa_logo.png'),
+  mastercardLogo: require('@/assets/icons/mastercard_logo.png'),
+  arrowDownSignToNavigate: require('@/assets/icons/arrow-down-sign-to-navigate.png'),
+  eye: require('@/assets/icons/eye.png'),
+  eyeOff: require('@/assets/icons/eye_off.png'),
 } as const;
 
 export const ImageAssets = {
@@ -9,3 +31,4 @@ export const ImageAssets = {
   icon: require('@/assets/images/icon.png'),
   splashIcon: require('@/assets/images/splash-icon.png'),
 } as const;
+

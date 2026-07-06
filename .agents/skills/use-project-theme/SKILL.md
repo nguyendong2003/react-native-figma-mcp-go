@@ -49,25 +49,18 @@ Always apply the preconfigured typography styles to maintain font consistency (a
 
 ### NativeWind Style Classes
 
-Apply these direct classes instead of setting font sizes, weights, and leading independently:
+To ensure 100% pixel-perfect fonts on all devices (especially iOS/Android where custom classes from CSS plugins might fail to compile), use the standard Tailwind classes mapping font-size, line-height, and font-family explicitly, or import `ThemeTypography` from `@/constants/theme` as a robust style fallback:
 
-- `text-title-1` (Poppins SemiBold, Size: 24px, Line Height: 28px)
-- `text-title-2` (Poppins SemiBold, Size: 20px, Line Height: 28px)
-- `text-title-3` (Poppins SemiBold, Size: 16px, Line Height: 24px)
-- `text-body-1` (Poppins Medium, Size: 16px, Line Height: 24px)
-- `text-body-2` (Poppins Regular, Size: 16px, Line Height: 24px)
-- `text-body-3` (Poppins Medium, Size: 14px, Line Height: 21px)
-- `text-caption-1` (Poppins SemiBold, Size: 12px, Line Height: 16px)
-- `text-caption-2` (Poppins Medium, Size: 12px, Line Height: 16px)
+- `text-title-1` -> `text-[24px] leading-[28px] font-poppins-semibold` or `style={ThemeTypography.title1}`
+- `text-title-2` -> `text-[20px] leading-[28px] font-poppins-semibold` or `style={ThemeTypography.title2}`
+- `text-title-3` -> `text-[16px] leading-[24px] font-poppins-semibold` or `style={ThemeTypography.title3}`
+- `text-body-1` -> `text-[16px] leading-[24px] font-poppins-medium` or `style={ThemeTypography.body1}`
+- `text-body-2` -> `text-[16px] leading-[24px] font-poppins-regular` or `style={ThemeTypography.body2}`
+- `text-body-3` -> `text-[14px] leading-[21px] font-poppins-medium` or `style={ThemeTypography.body3}`
+- `text-caption-1` -> `text-[12px] leading-[16px] font-poppins-semibold` or `style={ThemeTypography.caption1}`
+- `text-caption-2` -> `text-[12px] leading-[16px] font-poppins-medium` or `style={ThemeTypography.caption2}`
 
-### TypeScript Constant Fallback
-
-Import `ThemeTypography` from `@/constants/theme`:
-
-```typescript
-import { ThemeTypography } from '@/constants/theme';
-// Example: <Text style={ThemeTypography.title1}>Hello</Text>
-```
+*Warning: Never combine conflicting typography classes (e.g. `text-caption-2` combined with `font-poppins-regular`). Use explicit standard Tailwind classes for custom styling instead of mixing conflicting utilities.*
 
 ---
 
@@ -98,8 +91,8 @@ When building screens:
 
 1. **Always use these styles** rather than ad-hoc hex codes or default tailwind sizes (like `text-2xl`, `bg-blue-500`, `shadow-md`).
 2. Make sure `import '@/global.css';` is present in any entry routing or index screen so that Tailwind compiled stylesheets are correctly imported in the React Native runtime.
-3. Import `ThemeColors`, `ThemeTypography`, and `ThemeEffects` from `@/constants/theme` when NativeWind className syntax is insufficient (e.g. for custom animations or React Native components expecting native styling).
-4. **Use Common Components**: When applying these colors, typography, or effects on standard elements (like buttons or cards), always utilize the shared UI elements detailed in the `common-components` skill.
+3. Import `ThemeColors` and `ThemeEffects` from `@/constants/theme` when NativeWind className syntax is insufficient (e.g. for custom animations or React Native components expecting native styling).
+4. **Use Common Components & Stack Headers**: When building or refactoring screens, always prioritize importing and reusing elements from our common components catalog (detailed in the `common-components` skill) such as `Button`, `InputField`, `Avatar`, `CardBank`, `CardBeneficiary`, `CategoryCard`, and standard list/row items. Screen headers must be managed at layout level (e.g. in `src/app/_layout.tsx`) using Expo Router's `Stack` header option (`title`, `headerTheme`) rendering the common `<NavigationBar />` component, rather than rendering `<NavigationBar />` manually inline on individual screens.
 5. **Use Local Icon Assets**: When translating screens or custom components that utilize icons from the Figma design (e.g. Face ID, fingerprint, checkmarks), check the `assets/icons/` directory. If a matching icon file exists, register it in the central assets management file `src/constants/assets.ts` and import it using standard React Native `Image` (with `resizeMode="contain"` and `className`) instead of `expo-image` (so that NativeWind `className` classes are fully recognized), and avoid using inline `require` statements, styling custom graphics, or utilizing external vector icon libraries.
 
 ---
@@ -108,5 +101,7 @@ When building screens:
 
 - **common-components**: Shared UI controls must consume this theme by default so that all brand buttons, input fields, loader spinners, and alert borders match the Figma design system out of the box.
 - **fe-gen-screen**: Provides the Tailwind class name mappings and style structures to use during design-to-code translation.
-- **fix-screen-ui**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants during alignment corrections.
-- **fe-review-code**: Used as the auditing standard to eliminate hardcoded hex codes or ad-hoc margins.
+- **fix-screen-ui**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants (including ThemeTypography / ThemeColors) during alignment corrections.
+- **fe-perfect-pixel**: Used to ensure all precise layout spacing, typography sizes, colors, and shadows are correctly mapped to standard tailwind classes or project constants during pixel-perfect alignment.
+- **fe-review-code**: Used as the auditing standard to eliminate hardcoded hex codes, conflicting typography classes, or ad-hoc margins.
+

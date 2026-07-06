@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { TextInput, View, Text, TextInputProps, Pressable } from 'react-native';
+import {
+  Image,
+  NativeSyntheticEvent,
+  Pressable,
+  TargetedEvent,
+  Text,
+  TextInput,
+  TextInputProps,
+  View,
+} from 'react-native';
+import { IconAssets } from '@/constants/assets';
 
 export interface InputFieldProps extends TextInputProps {
   label?: string;
@@ -26,12 +36,12 @@ export function InputField({
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const handleFocus = (e: any) => {
+  const handleFocus = (e: NativeSyntheticEvent<TargetedEvent>) => {
     setIsFocused(true);
     if (onFocus) onFocus(e);
   };
 
-  const handleBlur = (e: any) => {
+  const handleBlur = (e: NativeSyntheticEvent<TargetedEvent>) => {
     setIsFocused(false);
     if (onBlur) onBlur(e);
   };
@@ -51,26 +61,30 @@ export function InputField({
     borderStyle = 'border border-primary-1'; // Focused color Blue-purple (#3629B7)
   }
 
+  const marginClass = containerClassName.includes('mb-') ? '' : 'mb-4';
+
   return (
-    <View className={`w-full mb-4 ${containerClassName}`}>
+    <View className={`w-full ${marginClass} ${containerClassName}`}>
       {label && (
-        <Text className="text-caption-1 text-primary-1 mb-1.5 font-semibold">
+        <Text className='text-[12px] leading-[16px] font-poppins-semibold text-primary-1 mb-[6px]'>
           {label}
         </Text>
       )}
 
       <View
-        className={`w-full h-[44px] bg-neutral-6 rounded-[15px] flex-row items-center px-4 ${borderStyle}`}
+        className={`w-full h-[44px] bg-neutral-6 rounded-[15px] flex-row items-center px-3 ${borderStyle}`}
       >
-        {leftIcon && <View className="mr-2 justify-center items-center">{leftIcon}</View>}
+        {leftIcon && (
+          <View className='mr-2 justify-center items-center'>{leftIcon}</View>
+        )}
 
         <TextInput
-          className={`flex-1 text-body-3 text-neutral-1 font-medium h-full p-0 ${className}`}
-          placeholderTextColor="#CACACA" // Neutral 4
+          className={`flex-1 text-[14px] leading-[21px] font-poppins-medium text-neutral-1 h-full p-0 ${className}`}
+          placeholderTextColor='#CACACA' // Neutral 4
           secureTextEntry={isSecure}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          autoCapitalize="none"
+          autoCapitalize='none'
           {...props}
         />
 
@@ -78,24 +92,31 @@ export function InputField({
           <Pressable
             onPress={togglePasswordVisibility}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            className="ml-2"
+            className='ml-2 w-6 h-6 justify-center items-center'
           >
-            <Text className="text-caption-2 text-primary-1 font-medium">
-              {isPasswordVisible ? 'Hide' : 'Show'}
-            </Text>
+            <Image
+              source={isPasswordVisible ? IconAssets.eyeOff : IconAssets.eye}
+              className='w-5 h-5'
+              resizeMode='contain'
+              style={{ tintColor: '#3629b7' }}
+            />
           </Pressable>
         ) : (
-          rightIcon && <View className="ml-2 justify-center items-center">{rightIcon}</View>
+          rightIcon && (
+            <View className='ml-2 justify-center items-center'>
+              {rightIcon}
+            </View>
+          )
         )}
       </View>
 
       {error ? (
-        <Text className="text-caption-2 text-semantic-1 mt-1 font-medium">
+        <Text className='text-[12px] leading-[16px] font-poppins-medium text-semantic-1 mt-[4px]'>
           {error}
         </Text>
       ) : (
         helperText && (
-          <Text className="text-caption-2 text-neutral-3 mt-1 font-medium">
+          <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-3 mt-[4px]'>
             {helperText}
           </Text>
         )

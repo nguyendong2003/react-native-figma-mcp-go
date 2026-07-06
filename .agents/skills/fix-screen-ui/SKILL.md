@@ -29,7 +29,8 @@ Verify the following properties between the Figma JSON output and the React Nati
 ### A. Layout & Spacing
 
 - **Relative Coordinates**: Ensure items are aligned horizontally and vertically using flexbox properties (`justify-center`, `items-center`, `self-stretch`, `flex-row`).
-- **Gaps & Margins**: Map pixel distances from Figma (e.g., `y` offsets difference between adjacent elements) to Tailwind gaps or margins (e.g., `gap-4`, `mt-6`).
+- **Gaps & Margins**: Always calculate vertical gaps mathematically using bounding boxes: `gap = next.y - (prev.y + prev.height)`. Never estimate spacing; calculate it down to the exact pixel. Map pixel distances to Tailwind arbitrary spacing values (e.g. `mt-[12px]`, `gap-[20px]`).
+- **Image/Icon Asset Padding**: Check for transparent padding inside image/icon PNG/SVG assets (using Python scripts to find non-transparent bounds). If the asset has transparent padding, its visual dimensions will be smaller than its bounding box. You must adjust its layout or margins, or crop the image to ensure pixel-perfect matching.
 - **Sizing**: Interactive containers (inputs, buttons) should stretch appropriately (`w-full`) but respect max-width boundaries (`max-w-[420px] mx-auto`) for responsiveness.
 
 ### B. Color Styles
@@ -50,15 +51,18 @@ Verify the following properties between the Figma JSON output and the React Nati
 
 ### C. Typography
 
-- Map Figma text styles to NativeWind typography classes:
-  - `Title / 1` (Size 24, LineHeight 28, SemiBold) -> `text-title-1`
-  - `Title / 2` (Size 20, LineHeight 28, SemiBold) -> `text-title-2`
-  - `Title / 3` (Size 16, LineHeight 24, SemiBold) -> `text-title-3`
-  - `Body / 1` (Size 16, LineHeight 24, Medium) -> `text-body-1`
-  - `Body / 2` (Size 16, LineHeight 24, Regular) -> `text-body-2`
-  - `Body / 3` (Size 14, LineHeight 21, Medium) -> `text-body-3`
-  - `Caption / 1` (Size 12, LineHeight 16, SemiBold) -> `text-caption-1`
-  - `Caption / 2` (Size 12, LineHeight 16, Medium) -> `text-caption-2`
+- Native Platform Compatibility Warning: React Native's NativeWind parser on iOS/Android does not reliably parse custom typography classes (like `text-title-1`) configured via CSS plugins. To ensure 100% pixel-perfect fonts on all devices, you must EITHER:
+  1. Apply standard Tailwind classes mapping font-size, line-height, and font-family explicitly:
+     - `text-title-1` -> `text-[24px] leading-[28px] font-poppins-semibold`
+     - `text-title-2` -> `text-[20px] leading-[28px] font-poppins-semibold`
+     - `text-title-3` -> `text-[16px] leading-[24px] font-poppins-semibold`
+     - `text-body-1` -> `text-[16px] leading-[24px] font-poppins-medium`
+     - `text-body-2` -> `text-[16px] leading-[24px] font-poppins-regular`
+     - `text-body-3` -> `text-[14px] leading-[21px] font-poppins-medium`
+     - `text-caption-1` -> `text-[12px] leading-[16px] font-poppins-semibold`
+     - `text-caption-2` -> `text-[12px] leading-[16px] font-poppins-medium`
+  2. Or use the TypeScript `ThemeTypography` styles directly in the `style` prop (e.g. `style={ThemeTypography.title1}`).
+- Never combine conflicting typography classes (e.g. `text-caption-2` which sets `Poppins-Medium` combined with `font-poppins-regular`). Use explicit standard Tailwind classes for custom styling instead of mixing conflicting utilities.
 
 ### D. Icons & Assets
 
@@ -71,14 +75,17 @@ Verify the following properties between the Figma JSON output and the React Nati
 
 1. **Modify Code**: Edit the files containing layout errors using replacement tools. Ensure to keep styling logic modular.
 2. **Review Code Guidelines**: Verify compliance against the `fe-review-code` guidelines (no hardcoded hex colors, appropriate platform-specific logic).
-3. **Verify Type Safety & Lints**: Run `npx tsc --noEmit` and check for compile-time errors to ensure changes are correct.
+3. **Verify Visuals**: Use `save_screenshots` to write Figma screenshots to disk in the allowed working folders and visually inspect the differences.
+4. **Verify Type Safety & Lints**: Run `npx tsc --noEmit` and check for compile-time errors to ensure changes are correct.
 
 ---
 
 ## 3. Skill Integration & Dependencies
 
 - **fe-gen-screen**: Defines the screen layout structure and component decomposition standards to evaluate against.
-- **use-project-theme**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants.
-- **common-components**: Used to ensure global buttons, input fields, dividers, and loading spinners are reused rather than replaced with raw or custom CSS code during alignment changes.
+- **use-project-theme**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants (including ThemeTypography / ThemeColors).
+- **common-components**: Used to ensure global buttons, input fields, dividers, and loading spinners are reused and handle margin overrides dynamically rather than replaced with raw or custom CSS code during alignment changes.
 - **naming-conventions**: Ensures that filenames for any refactored private components under `src/components/<screen-name>/` follow correct casing rules.
-- **fe-review-code**: The final quality gate ensuring that layout fixes do not introduce duplicate components, hardcoded values, or type errors.
+- **fe-perfect-pixel**: Works hand-in-hand to verify pixel-level styling, exact element margins, bounding box dimensions, and visual matching using screenshot overlays (via save_screenshots), taking the general corrections of `fix-screen-ui` a step further.
+- **fe-review-code**: The final quality gate ensuring that layout fixes do not introduce duplicate components, conflicting typography classes, hardcoded values, or type errors.
+

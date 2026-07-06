@@ -11,7 +11,7 @@ export function BiometricAuth({ onPress, className = '' }: BiometricAuthProps) {
   return (
     <Pressable
       onPress={onPress}
-      className={`w-16 h-16 rounded-full bg-neutral-6 border border-neutral-5 items-center justify-center shadow-card-2 active:bg-primary-4 self-center mt-6 mb-6 ${className}`}
+      className={`w-16 h-16 rounded-full items-center justify-center self-center active:opacity-60 ${className}`}
       accessibilityRole='button'
       accessibilityLabel='Sign in with Biometrics'
     >

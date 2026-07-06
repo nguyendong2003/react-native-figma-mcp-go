@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
 
+// Synced with Figma Design System Common Styles - Text, Effect, Color
 export const ThemeColors = {
   primary: {
     1: '#3629B7',
@@ -29,15 +30,15 @@ export type ThemeColorsType = typeof ThemeColors;
 // Backward compatible Colors object for useTheme hook
 export const Colors = {
   light: {
-    text: ThemeColors.neutral[1],          // Neutral 1 (#343434)
-    background: ThemeColors.neutral[6],    // Neutral 6 (#FFFFFF)
+    text: ThemeColors.neutral[1], // Neutral 1 (#343434)
+    background: ThemeColors.neutral[6], // Neutral 6 (#FFFFFF)
     backgroundElement: ThemeColors.primary[4], // Primary 4 (#F2F1F9)
     backgroundSelected: ThemeColors.primary[3], // Primary 3 (#A8A3D7)
     textSecondary: ThemeColors.neutral[3], // Neutral 3 (#989898)
   },
   dark: {
-    text: ThemeColors.neutral[6],          // Neutral 6 (#FFFFFF)
-    background: ThemeColors.neutral[1],    // Neutral 1 (#343434)
+    text: ThemeColors.neutral[6], // Neutral 6 (#FFFFFF)
+    background: ThemeColors.neutral[1], // Neutral 1 (#343434)
     backgroundElement: '#212225',
     backgroundSelected: '#2E3135',
     textSecondary: ThemeColors.neutral[3], // Neutral 3 (#989898)
@@ -46,51 +47,43 @@ export const Colors = {
 
 export const ThemeTypography = {
   title1: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 24,
-    fontWeight: '600',
     lineHeight: 28,
   },
   title2: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 20,
-    fontWeight: '600',
     lineHeight: 28,
   },
   title3: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 16,
-    fontWeight: '600',
     lineHeight: 24,
   },
   body1: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Medium',
     fontSize: 16,
-    fontWeight: '500',
     lineHeight: 24,
   },
   body2: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Regular',
     fontSize: 16,
-    fontWeight: '400',
     lineHeight: 24,
   },
   body3: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Medium',
     fontSize: 14,
-    fontWeight: '500',
     lineHeight: 21,
   },
   caption1: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-SemiBold',
     fontSize: 12,
-    fontWeight: '600',
     lineHeight: 16,
   },
   caption2: {
-    fontFamily: 'Poppins',
+    fontFamily: 'Poppins-Medium',
     fontSize: 12,
-    fontWeight: '500',
     lineHeight: 16,
   },
 } as const;

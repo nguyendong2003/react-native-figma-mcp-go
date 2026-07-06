@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  Alert,
-  Pressable,
-} from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { SignInHeader } from '@/components/sign-in/SignInHeader';
-import { SignInIllustration } from '@/components/sign-in/SignInIllustration';
-import { BiometricAuth } from '@/components/sign-in/BiometricAuth';
-import { InputField } from '@/components/InputField';
 import { Button } from '@/components/Button';
+import { InputField } from '@/components/InputField';
+import { BiometricAuth } from '@/components/sign-in/BiometricAuth';
+import { SignInIllustration } from '@/components/sign-in/SignInIllustration';
 import '@/global.css';
+import { useState } from 'react';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SignInScreen() {
   const [email, setEmail] = useState('');
@@ -73,16 +71,20 @@ export default function SignInScreen() {
       'Mock: Triggering FaceID / TouchID scan...',
       [
         { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Success', 
-          onPress: () => Alert.alert('Success', 'Biometric Authentication Succeeded!') 
+        {
+          text: 'Success',
+          onPress: () =>
+            Alert.alert('Success', 'Biometric Authentication Succeeded!'),
         },
-      ]
+      ],
     );
   };
 
   const handleForgotPassword = () => {
-    Alert.alert('Forgot Password', 'Mock: Redirecting to password reset flow...');
+    Alert.alert(
+      'Forgot Password',
+      'Mock: Redirecting to password reset flow...',
+    );
   };
 
   const handleSignUp = () => {
@@ -90,35 +92,33 @@ export default function SignInScreen() {
   };
 
   // Enable button only if both fields are filled and have no current errors
-  const canSubmit = email.length > 0 && password.length > 0 && !emailError && !passwordError;
+  const canSubmit =
+    email.length > 0 && password.length > 0 && !emailError && !passwordError;
 
   return (
-    <SafeAreaView className="flex-1 bg-primary-1" edges={['top', 'left', 'right']}>
-      <StatusBar style="light" />
-      <SignInHeader />
-      
+    <SafeAreaView
+      className='flex-1 bg-primary-1'
+      edges={['left', 'right', 'bottom']}
+    >
       {/* 15px Blue space under navigation bar (y=93 to y=108) */}
-      <View className="h-[15px] bg-primary-1 w-full" />
-      
+      <View className='h-[15px] bg-primary-1 w-full' />
+
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1"
+        className='flex-1'
       >
-        <ScrollView 
-          className="flex-1 bg-primary-1"
+        <ScrollView
+          className='flex-1 bg-primary-1'
           contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps='handled'
           showsVerticalScrollIndicator={false}
         >
           {/* Main White Content Sheet */}
-          <View className="flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-6 pb-8 shadow-card-1">
-            
+          <View className='flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-6 pb-8 shadow-card-1'>
             {/* Header Titles (Top padding is 24px, gap to subtitle is 4px) */}
             <View>
-              <Text className="text-title-1 text-primary-1">
-                Welcome Back
-              </Text>
-              <Text className="text-caption-2 text-neutral-1 mt-1">
+              <Text className='text-[24px] leading-[28px] font-poppins-semibold text-primary-1'>Welcome Back</Text>
+              <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-1 mt-[4px]'>
                 Hello there, sign in to continue
               </Text>
             </View>
@@ -127,9 +127,10 @@ export default function SignInScreen() {
             <SignInIllustration />
 
             {/* Form Fields */}
-            <View className="w-full max-w-[420px] mx-auto">
+            <View className='w-full max-w-[420px] mx-auto'>
               <InputField
-                placeholder="Text input"
+                placeholder='Text input'
+                containerClassName='mb-[20px]'
                 value={email}
                 onChangeText={(text) => {
                   setEmail(text);
@@ -137,12 +138,13 @@ export default function SignInScreen() {
                 }}
                 onBlur={() => validateEmail(email)}
                 error={emailError}
-                keyboardType="email-address"
-                autoComplete="email"
+                keyboardType='email-address'
+                autoComplete='email'
               />
 
               <InputField
-                placeholder="Password"
+                placeholder='Password'
+                containerClassName='mb-0'
                 value={password}
                 onChangeText={(text) => {
                   setPassword(text);
@@ -151,48 +153,50 @@ export default function SignInScreen() {
                 onBlur={() => validatePassword(password)}
                 error={passwordError}
                 secureTextEntry
-                autoComplete="password"
+                autoComplete='password'
               />
 
               {/* Forgot Password Link (12px top gap, 40px bottom gap) */}
               <Pressable
                 onPress={handleForgotPassword}
-                className="self-end mt-3 mb-10"
+                className='self-end mt-[12px] mb-[40px]'
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
-                <Text className="text-caption-2 text-neutral-4 font-medium active:text-primary-1">
+                <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-4 active:text-primary-1'>
                   Forgot your password ?
                 </Text>
               </Pressable>
 
               {/* Sign In Button (24px bottom gap) */}
               <Button
-                title="Sign in"
+                title='Sign in'
                 onPress={handleSignIn}
                 disabled={!canSubmit}
                 isLoading={isLoading}
-                className="w-full mb-6"
+                className='w-full mb-[24px]'
               />
 
               {/* Biometric Scan Trigger */}
-              <BiometricAuth onPress={handleBiometricAuth} />
+              <BiometricAuth
+                onPress={handleBiometricAuth}
+                className='mb-[24px]'
+              />
 
               {/* Sign Up Footer Link */}
-              <View className="flex-row justify-center items-center mt-6">
-                <Text className="text-caption-2 text-neutral-1">
+              <View className='flex-row justify-center items-center gap-[12px]'>
+                <Text className='text-[12px] leading-[16px] font-poppins-regular text-neutral-1'>
                   {"Don't have an account? "}
                 </Text>
                 <Pressable
                   onPress={handleSignUp}
                   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
-                  <Text className="text-caption-1 text-primary-1 font-semibold active:text-primary-2">
+                  <Text className='text-[12px] leading-[16px] font-poppins-semibold text-primary-1 active:text-primary-2'>
                     Sign Up
                   </Text>
                 </Pressable>
               </View>
             </View>
-
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
