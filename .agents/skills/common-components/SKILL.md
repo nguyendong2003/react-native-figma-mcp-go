@@ -40,6 +40,8 @@ A component is considered "common" if it is designed for global reuse across mul
    - Fallback colors, borders, typography, and shadows must always default to our Figma design system tokens (`bg-primary-1`, `text-neutral-1`, `text-body-1`, `shadow-card-1`, etc.).
 5. **Accessibility (a11y)**:
    - Provide standard accessibility props such as `accessibilityRole`, `accessibilityLabel`, and `accessibilityState` (e.g. mapping `disabled` prop to `accessibilityState={{ disabled }}`).
+6. **Use Local Icon Assets**:
+    - If a common component needs to render icons (such as checkmarks, secure/password visibility icons, brand logos, or biometrics), it must search the `assets/icons/` folder, register it in the central assets management file `src/constants/assets.ts`, and import/use the registered asset via `Image` from `react-native` (with `resizeMode="contain"`), rather than using inline `require` statements, third-party SVG/vector icon libraries, or `expo-image`.
 
 ---
 
@@ -49,6 +51,7 @@ Common components must reside directly in the root of the components folder:
 `src/components/<ComponentName>.tsx`
 
 Key common components to maintain/reuse:
+
 - **Button**: Handles primary action styling, secondary outlines, loading spinners, and disabled states.
 - **InputField**: Wraps `TextInput`, labels, validation errors, and toggle icon states (like secure text eye icon).
 - **LoadingSpinner**: Standard activity indicator centered inside a view, styled with `color={ThemeColors.primary[1]}`.
@@ -64,4 +67,3 @@ Key common components to maintain/reuse:
 - **fe-gen-screen**: Applied together when building screen layouts; standard buttons and text inputs should import and extend these common controls rather than coding layout overrides inline.
 - **fix-screen-ui**: Used to ensure global buttons, input fields, dividers, and loading spinners are reused rather than replaced with raw or custom CSS code during alignment changes.
 - **fe-review-code**: Serves as the audit gate verifying that common components are reused and extended rather than rewritten.
-

@@ -10,6 +10,7 @@ This skill defines the workflow for comparing an existing React Native screen an
 ## 0. Command Usage: `fix-screen-ui <screen-name>`
 
 When the user enters `fix-screen-ui <screen-name>` in the chat:
+
 1. **Trigger Action**: Treat this as a request to compare and fix the layout of `src/app/<screen-name>.tsx` (and its sub-components under `src/components/<screen-name>/`) to match the selected frame in Figma.
 2. **File Location**:
    - Locate the main screen at `src/app/<screen-name>.tsx` (using lowercase kebab-case).
@@ -26,11 +27,13 @@ When the user enters `fix-screen-ui <screen-name>` in the chat:
 Verify the following properties between the Figma JSON output and the React Native code:
 
 ### A. Layout & Spacing
+
 - **Relative Coordinates**: Ensure items are aligned horizontally and vertically using flexbox properties (`justify-center`, `items-center`, `self-stretch`, `flex-row`).
 - **Gaps & Margins**: Map pixel distances from Figma (e.g., `y` offsets difference between adjacent elements) to Tailwind gaps or margins (e.g., `gap-4`, `mt-6`).
 - **Sizing**: Interactive containers (inputs, buttons) should stretch appropriately (`w-full`) but respect max-width boundaries (`max-w-[420px] mx-auto`) for responsiveness.
 
 ### B. Color Styles
+
 - Compare fills and stroke color hexes from Figma styles with our project's custom Tailwind theme tokens:
   - `#3629B7` -> `bg-primary-1` / `text-primary-1`
   - `#5655B9` -> `bg-primary-2` / `text-primary-2`
@@ -46,6 +49,7 @@ Verify the following properties between the Figma JSON output and the React Nati
   - `#0890FE` -> `text-semantic-2` (Info)
 
 ### C. Typography
+
 - Map Figma text styles to NativeWind typography classes:
   - `Title / 1` (Size 24, LineHeight 28, SemiBold) -> `text-title-1`
   - `Title / 2` (Size 20, LineHeight 28, SemiBold) -> `text-title-2`
@@ -55,6 +59,11 @@ Verify the following properties between the Figma JSON output and the React Nati
   - `Body / 3` (Size 14, LineHeight 21, Medium) -> `text-body-3`
   - `Caption / 1` (Size 12, LineHeight 16, SemiBold) -> `text-caption-1`
   - `Caption / 2` (Size 12, LineHeight 16, Medium) -> `text-caption-2`
+
+### D. Icons & Assets
+
+- **Check Assets Folder**: Verify if any icons used in the Figma design (e.g. Face ID, fingerprint, checkmarks, eye toggles) are stored in the `assets/icons/` folder.
+- **Use Matching Icons**: Ensure that instead of rendering custom shapes, text-based symbols, or downloading third-party icons, the icon is registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image`).
 
 ---
 

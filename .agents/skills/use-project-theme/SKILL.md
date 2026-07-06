@@ -12,6 +12,7 @@ This skill outlines the design tokens retrieved from Figma and instructs the age
 Use these colors for backgrounds, borders, texts, fills, etc.
 
 ### NativeWind Classes
+
 - **Primary Palette**:
   - `bg-primary-1` / `text-primary-1` / `border-primary-1` (Base brand color: `#3629B7`)
   - `bg-primary-2` / `text-primary-2` / `border-primary-2` (Medium-light brand: `#5655B9`)
@@ -32,7 +33,9 @@ Use these colors for backgrounds, borders, texts, fills, etc.
   - `bg-semantic-5` / `text-semantic-5` (Orange - Alert / Attention: `#FB6B18`)
 
 ### TypeScript Constant Fallback
+
 Import `ThemeColors` from `@/constants/theme` for inline styles or prop passing:
+
 ```typescript
 import { ThemeColors } from '@/constants/theme';
 // Example: ThemeColors.primary[1] -> '#3629B7'
@@ -45,7 +48,9 @@ import { ThemeColors } from '@/constants/theme';
 Always apply the preconfigured typography styles to maintain font consistency (all texts use the Poppins font).
 
 ### NativeWind Style Classes
+
 Apply these direct classes instead of setting font sizes, weights, and leading independently:
+
 - `text-title-1` (Poppins SemiBold, Size: 24px, Line Height: 28px)
 - `text-title-2` (Poppins SemiBold, Size: 20px, Line Height: 28px)
 - `text-title-3` (Poppins SemiBold, Size: 16px, Line Height: 24px)
@@ -56,7 +61,9 @@ Apply these direct classes instead of setting font sizes, weights, and leading i
 - `text-caption-2` (Poppins Medium, Size: 12px, Line Height: 16px)
 
 ### TypeScript Constant Fallback
+
 Import `ThemeTypography` from `@/constants/theme`:
+
 ```typescript
 import { ThemeTypography } from '@/constants/theme';
 // Example: <Text style={ThemeTypography.title1}>Hello</Text>
@@ -69,12 +76,15 @@ import { ThemeTypography } from '@/constants/theme';
 Use these shadows to style cards, overlays, and bottom tab bars.
 
 ### NativeWind Shadow Classes
+
 - `shadow-card-1` (Blur: 30, Y: 4, Color: `#3629B7` @ 7% opacity) - standard cards
 - `shadow-card-2` (Blur: 30, Y: 5, Color: `#000000` @ 5% opacity) - secondary cards
 - `shadow-tab-bar` (Blur: 30, Y: -5, Color: `#3629B7` @ 7% opacity) - elevated bottom navigation bar
 
 ### TypeScript Constant Fallback
+
 Import `ThemeEffects` from `@/constants/theme`:
+
 ```typescript
 import { ThemeEffects } from '@/constants/theme';
 // Example: <View style={[ThemeEffects.card1, { backgroundColor: '#fff' }]}>...</View>
@@ -85,10 +95,12 @@ import { ThemeEffects } from '@/constants/theme';
 ## 4. Coding Instructions for Screen Generation
 
 When building screens:
+
 1. **Always use these styles** rather than ad-hoc hex codes or default tailwind sizes (like `text-2xl`, `bg-blue-500`, `shadow-md`).
 2. Make sure `import '@/global.css';` is present in any entry routing or index screen so that Tailwind compiled stylesheets are correctly imported in the React Native runtime.
 3. Import `ThemeColors`, `ThemeTypography`, and `ThemeEffects` from `@/constants/theme` when NativeWind className syntax is insufficient (e.g. for custom animations or React Native components expecting native styling).
 4. **Use Common Components**: When applying these colors, typography, or effects on standard elements (like buttons or cards), always utilize the shared UI elements detailed in the `common-components` skill.
+5. **Use Local Icon Assets**: When translating screens or custom components that utilize icons from the Figma design (e.g. Face ID, fingerprint, checkmarks), check the `assets/icons/` directory. If a matching icon file exists, register it in the central assets management file `src/constants/assets.ts` and import it using standard React Native `Image` (with `resizeMode="contain"` and `className`) instead of `expo-image` (so that NativeWind `className` classes are fully recognized), and avoid using inline `require` statements, styling custom graphics, or utilizing external vector icon libraries.
 
 ---
 
@@ -98,5 +110,3 @@ When building screens:
 - **fe-gen-screen**: Provides the Tailwind class name mappings and style structures to use during design-to-code translation.
 - **fix-screen-ui**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants during alignment corrections.
 - **fe-review-code**: Used as the auditing standard to eliminate hardcoded hex codes or ad-hoc margins.
-
-

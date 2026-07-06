@@ -14,10 +14,11 @@ This skill defines the criteria and checklist items for conducting code reviews 
   - Core constants (e.g., `ThemeColors.primary[1]`, `ThemeTypography.title2`).
 - **No Redundant Component Code**: Check if the code recreates generic elements (such as standard buttons, text inputs, spinners, or alert banners) from scratch. Ensure they import and extend the generic component versions from `src/components/` as mandated by the `common-components` skill.
 - **Responsive Layout Check**: Check that layouts do not use fixed width/height containers unless explicitly required (e.g. icons, avatars). Use flexbox classes (`flex-1`, `w-full`, `gap-4`) to ensure fluidity across devices.
+- **Local Icon Assets**: Verify that any icons/images used in the UI are registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image` for rendering), rather than using inline `require` statements, importing external vector icons, or using third-party packages.
 - **Import Order**:
 
   1. React and React Native core imports.
-  2. Expo packages (e.g. `expo-router`, `expo-image`).
+  2. Expo packages (e.g. `expo-router`).
   3. Third-party npm packages.
   4. Absolute imports (`@/components/...`, `@/constants/...`).
   5. Relative imports (`../`, `./`).
@@ -52,10 +53,10 @@ This skill defines the criteria and checklist items for conducting code reviews 
 ## 5. Skill Integration & Dependencies
 
 This review skill acts as the final quality gate that orchestrates and validates compliance with all other workspace skills:
+
 - **naming-conventions**: Audit casing rules (PascalCase vs. camelCase) and verify Git branch/commit conventions.
 - **use-project-theme**: Enforce complete design token coverage and reject any hardcoded hex codes.
 - **common-components**: Enforce the reuse of shared buttons, inputs, dividers, and alert boxes, preventing custom duplicates.
 - **fe-gen-screen**: Check component decomposition, responsive behavior limits, scroll container safety, and safe area handling.
 - **fix-screen-ui**: Verify spacing adjustments, typography mappings, and layout alignment fixes adhere strictly to the selected Figma structure and style guidelines.
 - **fe-integrate-api**: Check asynchronous loading hook lifecycles, memory leak checks, and strict TS interfaces.
-
