@@ -70,6 +70,18 @@ export default function RootLayout() {
         }
       />
       <Stack.Screen
+        name='sign-up'
+        options={
+          {
+            title: 'Sign up',
+            headerTheme: 'black',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
+      <Stack.Screen
         name='component-catalog'
         options={
           {

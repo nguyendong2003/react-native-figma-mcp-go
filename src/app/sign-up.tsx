@@ -1,9 +1,8 @@
 import { Button } from '@/components/Button';
 import { InputField } from '@/components/InputField';
-import { BiometricAuth } from '@/components/sign-in/BiometricAuth';
-import { SignInIllustration } from '@/components/sign-in/SignInIllustration';
+import { SignUpIllustration } from '@/components/signup/SignUpIllustration';
 import '@/global.css';
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
@@ -16,12 +15,26 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function SignInScreen() {
+export default function SignUpScreen() {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+  const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Name Validation
+  const validateName = (val: string) => {
+    if (!val.trim()) {
+      setNameError('Name is required');
+      return false;
+    }
+    setNameError('');
+    return true;
+  };
 
   // Email Validation regex
   const validateEmail = (val: string) => {
@@ -52,47 +65,39 @@ export default function SignInScreen() {
     return true;
   };
 
-  const handleSignIn = () => {
+  const handleSignUp = () => {
+    const isNameValid = validateName(name);
     const isEmailValid = validateEmail(email);
     const isPasswordValid = validatePassword(password);
 
-    if (isEmailValid && isPasswordValid) {
+    if (isNameValid && isEmailValid && isPasswordValid && agreeTerms) {
       setIsLoading(true);
-      // Simulate API Sign-in call
+      // Simulate API Sign-up call
       setTimeout(() => {
         setIsLoading(false);
-        Alert.alert('Success', `Signed in successfully as ${email}`);
+        Alert.alert('Success', `Account created successfully for ${name}! Please sign in.`, [
+          {
+            text: 'OK',
+            onPress: () => router.replace('/sign-in'),
+          },
+        ]);
       }, 1500);
     }
   };
 
-  const handleBiometricAuth = () => {
-    Alert.alert(
-      'Biometric Sign In',
-      'Mock: Triggering FaceID / TouchID scan...',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Success',
-          onPress: () =>
-            Alert.alert('Success', 'Biometric Authentication Succeeded!'),
-        },
-      ],
-    );
+  const handleGoToSignIn = () => {
+    router.replace('/sign-in');
   };
 
-  const handleForgotPassword = () => {
-    Alert.alert(
-      'Forgot Password',
-      'Mock: Redirecting to password reset flow...',
-    );
-  };
-
-
-
-  // Enable button only if both fields are filled and have no current errors
+  // Enable button only if all fields are filled, terms accepted, and no current errors
   const canSubmit =
-    email.length > 0 && password.length > 0 && !emailError && !passwordError;
+    name.trim().length > 0 &&
+    email.length > 0 &&
+    password.length > 0 &&
+    agreeTerms &&
+    !nameError &&
+    !emailError &&
+    !passwordError;
 
   return (
     <SafeAreaView
@@ -116,17 +121,34 @@ export default function SignInScreen() {
           <View className='flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-6 pb-8 shadow-card-1'>
             {/* Header Titles (Top padding is 24px, gap to subtitle is 4px) */}
             <View>
-              <Text className='text-[24px] leading-[28px] font-poppins-semibold text-primary-1'>Welcome Back</Text>
+              <Text className='text-[24px] leading-[28px] font-poppins-semibold text-primary-1'>
+                Welcome to us,
+              </Text>
               <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-1 mt-[4px]'>
-                Hello there, sign in to continue
+                Hello there, create New account
               </Text>
             </View>
 
-            {/* Central Padlock Illustration */}
-            <SignInIllustration />
+            {/* Central Phone/Fingerprint Illustration */}
+            <SignUpIllustration />
 
             {/* Form Fields */}
             <View className='w-full max-w-[420px] mx-auto'>
+              {/* Name field (32px top gap, 20px bottom gap) */}
+              <InputField
+                placeholder='Name'
+                containerClassName='mb-[20px]'
+                value={name}
+                onChangeText={(text) => {
+                  setName(text);
+                  if (nameError) validateName(text);
+                }}
+                onBlur={() => validateName(name)}
+                error={nameError}
+                autoComplete='name'
+              />
+
+              {/* Email field (20px bottom gap) */}
               <InputField
                 placeholder='Text input'
                 containerClassName='mb-[20px]'
@@ -141,9 +163,10 @@ export default function SignInScreen() {
                 autoComplete='email'
               />
 
+              {/* Password field (20px bottom gap) */}
               <InputField
                 placeholder='Password'
-                containerClassName='mb-0'
+                containerClassName='mb-[20px]'
                 value={password}
                 onChangeText={(text) => {
                   setPassword(text);
@@ -152,46 +175,54 @@ export default function SignInScreen() {
                 onBlur={() => validatePassword(password)}
                 error={passwordError}
                 secureTextEntry
-                autoComplete='password'
+                autoComplete='password-new'
               />
 
-              {/* Forgot Password Link (12px top gap, 40px bottom gap) */}
+              {/* Terms and Conditions Checkbox (20px top gap, 32px bottom gap) */}
               <Pressable
-                onPress={handleForgotPassword}
-                className='self-end mt-[12px] mb-[40px]'
+                onPress={() => setAgreeTerms(!agreeTerms)}
+                className='flex-row items-center gap-[12px] mb-[32px] w-full'
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
-                <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-4 active:text-primary-1'>
-                  Forgot your password ?
+                <View
+                  className={`w-6 h-6 rounded-[4px] border items-center justify-center ${
+                    agreeTerms
+                      ? 'bg-primary-1 border-primary-1'
+                      : 'border-[#bfbfbf]'
+                  }`}
+                >
+                  {agreeTerms && (
+                    <View className='w-[10px] h-[6px] border-l-2 border-b-2 border-neutral-6 -rotate-45 -mt-0.5' />
+                  )}
+                </View>
+                <Text className='text-[12px] leading-[16px] font-poppins-regular text-neutral-1 flex-1'>
+                  {'By creating an account your aggree\nto our  '}
+                  <Text className='font-poppins-semibold text-primary-1'>
+                    Term and Condtions
+                  </Text>
                 </Text>
               </Pressable>
 
-              {/* Sign In Button (24px bottom gap) */}
+              {/* Sign Up Button (32px bottom gap) */}
               <Button
-                title='Sign in'
-                onPress={handleSignIn}
+                title='Sign up'
+                onPress={handleSignUp}
                 disabled={!canSubmit}
                 isLoading={isLoading}
-                className='w-full mb-[24px]'
+                className='w-full mb-[32px]'
               />
 
-              {/* Biometric Scan Trigger */}
-              <BiometricAuth
-                onPress={handleBiometricAuth}
-                className='mb-[24px]'
-              />
-
-              {/* Sign Up Footer Link */}
+              {/* Sign In Footer Link */}
               <View className='flex-row justify-center items-center gap-[12px]'>
                 <Text className='text-[12px] leading-[16px] font-poppins-regular text-neutral-1'>
-                  {"Don't have an account? "}
+                  Have an account?
                 </Text>
                 <Pressable
-                  onPress={() => router.push('/sign-up')}
+                  onPress={handleGoToSignIn}
                   hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 >
                   <Text className='text-[12px] leading-[16px] font-poppins-semibold text-primary-1 active:text-primary-2'>
-                    Sign Up
+                    Sign In
                   </Text>
                 </Pressable>
               </View>
