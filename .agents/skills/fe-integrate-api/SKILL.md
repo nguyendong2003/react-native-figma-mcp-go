@@ -103,6 +103,7 @@ export function useFetchData<T>(apiFunc: () => Promise<T>) {
 - **common-components**: Use the `LoadingSpinner` and `ErrorAlert` generic components to represent asynchronous query states.
 - **naming-conventions**: Standardize naming for request/response interfaces, event handlers (prefixed with `handle`), and hook files.
 - **use-project-theme**: Use semantic theme colors (`text-semantic-1`) for inline validation feedback or warning banners.
+- **fe-gen-screen**: Applied when structuring screen layouts to ensure correct placement of form states, loader views, and safe areas during API client binding.
 - **fix-screen-ui**: Used to verify layout alignment of loader states, network error boxes, and inline validation errors.
 - **fe-perfect-pixel**: Used to ensure that custom loading indicators, skeleton loader components, and error boundary layouts match their Figma design layout precisely, using mathematical spacing and audited image file padding.
 - **fe-review-code**: Used to audit asynchronous state lifecycles, verify strict TypeScript typings, and review secure token storage.

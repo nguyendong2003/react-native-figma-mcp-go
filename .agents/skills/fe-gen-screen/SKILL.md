@@ -118,6 +118,7 @@ src/
   ```
 - **Icons**: When a Figma design uses specific icons (e.g., Face ID, fingerprint, checkmarks, etc.), check if the corresponding asset file exists in the `assets/icons/` folder.
   - If a matching icon file exists (e.g., `assets/icons/faceid.png`, `assets/icons/fingerprint.png`), you **must** register it inside the central assets management file `src/constants/assets.ts` and import it (using standard React Native `Image` for rendering) rather than using inline `require` statements, custom shapes, or downloading external files.
+  - **Exporting Missing Icons**: If the icon is not available in `assets/icons/`, locate its node ID in Figma and export it using the `save_screenshots` tool (using SVG or PNG format and setting the output path inside `assets/icons/`). Once saved, register the new icon in `src/constants/assets.ts` under `IconAssets` and import it.
 - **Typography Native Compatibility**: React Native's NativeWind parser on iOS/Android does not reliably parse custom typography classes (like `text-title-1`) configured via CSS plugins. To ensure 100% pixel-perfect fonts on all devices, you must EITHER:
   1. Apply standard Tailwind classes mapping font-size, line-height, and font-family explicitly:
      - `text-title-1` -> `text-[24px] leading-[28px] font-poppins-semibold`
@@ -138,7 +139,8 @@ src/
 - **use-project-theme**: Use this skill to map visual shapes, color styles, and fonts retrieved from Figma to NativeWind utility classes and theme constants (including ThemeTypography / ThemeColors).
 - **common-components**: Prioritize importing and extending generic elements (Buttons, InputFields) instead of coding them inline. Make sure they dynamically handle margin overrides from `containerClassName`.
 - **naming-conventions**: Use this skill to name screens in kebab-case under `src/app/` and split private layouts in PascalCase.
+- **fe-integrate-api**: Used to structure layouts to support loader components, handle network error displays, and integrate form action callbacks.
 - **fix-screen-ui**: Used after screen generation to compare layout discrepancies line-by-line and correct styling or spacing errors to match the Figma design.
 - **fe-perfect-pixel**: Used after initial screen layout generation to fine-tune spacing, typography, dimensions, padding, colors, and borders to match the design down to the exact pixel using mathematical gaps and image padding checks.
-- **fe-review-code**: Used to verify layout compliance, responsive safety limits, component modularity, type safety, and typography classes before merging. safety limits, and component modularity before merging.
+- **fe-review-code**: Used to verify layout compliance, responsive safety limits, component modularity, type safety, and typography classes before merging.
 

@@ -67,7 +67,9 @@ Verify the following properties between the Figma JSON output and the React Nati
 ### D. Icons & Assets
 
 - **Check Assets Folder**: Verify if any icons used in the Figma design (e.g. Face ID, fingerprint, checkmarks, eye toggles) are stored in the `assets/icons/` folder.
-- **Use Matching Icons**: Ensure that instead of rendering custom shapes, text-based symbols, or downloading third-party icons, the icon is registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image`).
+- **Export and Use Matching Icons**: Ensure that instead of rendering custom shapes, text-based symbols, or downloading third-party icons, you register and use the matching icon:
+  - If the icon file is not available in `assets/icons/`, export it from Figma using the `save_screenshots` tool (e.g., SVG/PNG format) into `assets/icons/`.
+  - Register it in the central assets management file `src/constants/assets.ts` under `IconAssets` and import/use it using standard React Native `Image`.
 
 ---
 
@@ -83,9 +85,9 @@ Verify the following properties between the Figma JSON output and the React Nati
 ## 3. Skill Integration & Dependencies
 
 - **fe-gen-screen**: Defines the screen layout structure and component decomposition standards to evaluate against.
-- **use-project-theme**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants (including ThemeTypography / ThemeColors).
+- **use-project-theme**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants (including ThemeTypography / ThemeColors) during alignment corrections.
 - **common-components**: Used to ensure global buttons, input fields, dividers, and loading spinners are reused and handle margin overrides dynamically rather than replaced with raw or custom CSS code during alignment changes.
 - **naming-conventions**: Ensures that filenames for any refactored private components under `src/components/<screen-name>/` follow correct casing rules.
+- **fe-integrate-api**: Ensures that error layouts, loading overlays, and async state feedback elements are correctly aligned and positioned matching Figma's specifications.
 - **fe-perfect-pixel**: Works hand-in-hand to verify pixel-level styling, exact element margins, bounding box dimensions, and visual matching using screenshot overlays (via save_screenshots), taking the general corrections of `fix-screen-ui` a step further.
 - **fe-review-code**: The final quality gate ensuring that layout fixes do not introduce duplicate components, conflicting typography classes, hardcoded values, or type errors.
-

@@ -105,6 +105,18 @@ export default function RootLayout() {
           >['options']
         }
       />
+      <Stack.Screen
+        name='pay-the-bill'
+        options={
+          {
+            title: 'Pay the bill',
+            headerTheme: 'white',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
     </Stack>
   );
 }

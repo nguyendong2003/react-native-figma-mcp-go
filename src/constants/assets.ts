@@ -23,6 +23,10 @@ export const IconAssets = {
   arrowDownSignToNavigate: require('@/assets/icons/arrow-down-sign-to-navigate.png'),
   eye: require('@/assets/icons/eye.png'),
   eyeOff: require('@/assets/icons/eye_off.png'),
+  electricBill: require('@/assets/icons/electric_bill.png'),
+  waterBill: require('@/assets/icons/water_bill.png'),
+  mobileBill: require('@/assets/icons/mobile_bill.png'),
+  internetBill: require('@/assets/icons/internet_bill.png'),
 } as const;
 
 export const ImageAssets = {

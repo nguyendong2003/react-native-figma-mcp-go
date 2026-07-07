@@ -17,7 +17,7 @@ This skill defines the criteria and checklist items for conducting code reviews 
 - **No Redundant Component Code**: Check if the code recreates generic elements (such as standard buttons, text inputs, spinners, or alert banners) from scratch. Ensure they import and extend the generic component versions from `src/components/` as mandated by the `common-components` skill.
 - **Responsive Layout Check**: Check that layouts do not use fixed width/height containers unless explicitly required (e.g. icons, avatars). Use flexbox classes (`flex-1`, `w-full`, `gap-4`) to ensure fluidity across devices.
 - **Mathematical Spacing Check**: Audit that all spacing between consecutive elements (gaps, margins) is mathematically calculated using bounding boxes: `gap = next.y - (prev.y + prev.height)`. Reject estimated or ad-hoc values.
-- **Local Icon Assets**: Verify that any icons/images used in the UI are registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image` for rendering), rather than using inline `require` statements, importing external vector icons, or using third-party packages.
+- **Local Icon Assets**: Verify that any icons/images used in the UI are registered in the central assets management file `src/constants/assets.ts` and imported/used (using standard React Native `Image` for rendering), rather than using inline `require` statements, importing external vector icons, or using third-party packages. If an icon was missing from the assets folder, ensure it was exported from Figma using `save_screenshots` and registered correctly.
 - **Import Order**:
 
   1. React and React Native core imports.

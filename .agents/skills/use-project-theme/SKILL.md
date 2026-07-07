@@ -94,13 +94,16 @@ When building screens:
 3. Import `ThemeColors` and `ThemeEffects` from `@/constants/theme` when NativeWind className syntax is insufficient (e.g. for custom animations or React Native components expecting native styling).
 4. **Use Common Components & Stack Headers**: When building or refactoring screens, always prioritize importing and reusing elements from our common components catalog (detailed in the `common-components` skill) such as `Button`, `InputField`, `Avatar`, `CardBank`, `CardBeneficiary`, `CategoryCard`, and standard list/row items. Screen headers must be managed at layout level (e.g. in `src/app/_layout.tsx`) using Expo Router's `Stack` header option (`title`, `headerTheme`) rendering the common `<NavigationBar />` component, rather than rendering `<NavigationBar />` manually inline on individual screens.
 5. **Use Local Icon Assets**: When translating screens or custom components that utilize icons from the Figma design (e.g. Face ID, fingerprint, checkmarks), check the `assets/icons/` directory. If a matching icon file exists, register it in the central assets management file `src/constants/assets.ts` and import it using standard React Native `Image` (with `resizeMode="contain"` and `className`) instead of `expo-image` (so that NativeWind `className` classes are fully recognized), and avoid using inline `require` statements, styling custom graphics, or utilizing external vector icon libraries.
+   - **Exporting Missing Icons**: If the icon is not available, locate its node ID in Figma and export it using the `save_screenshots` tool (recommending SVG or PNG format) into `assets/icons/`. Once exported, register it inside `src/constants/assets.ts` under `IconAssets` and import it.
 
 ---
 
 ## 5. Skill Integration & Dependencies
 
 - **common-components**: Shared UI controls must consume this theme by default so that all brand buttons, input fields, loader spinners, and alert borders match the Figma design system out of the box.
+- **naming-conventions**: Determines naming structure for styling variables, custom Tailwind configuration extensions, and Theme constants.
 - **fe-gen-screen**: Provides the Tailwind class name mappings and style structures to use during design-to-code translation.
+- **fe-integrate-api**: Connects styling classes and constants with semantic colors for error states, success validation, or loading states.
 - **fix-screen-ui**: Used to map direct color hex values or typography styles from Figma into NativeWind classes and project constants (including ThemeTypography / ThemeColors) during alignment corrections.
 - **fe-perfect-pixel**: Used to ensure all precise layout spacing, typography sizes, colors, and shadows are correctly mapped to standard tailwind classes or project constants during pixel-perfect alignment.
 - **fe-review-code**: Used as the auditing standard to eliminate hardcoded hex codes, conflicting typography classes, or ad-hoc margins.

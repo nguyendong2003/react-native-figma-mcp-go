@@ -27,7 +27,8 @@ Before starting work, read this directory to identify the appropriate skill file
 * **Key Topics**:
   - Extracting node hierarchies and visual references using `figma-mcp-go` and `save_screenshots`.
   - Component splitting rules (modular layout orchestration, private sub-components).
-  - Scroll container safety limits, Safe Areanotch handling, and standard Image components.
+  - Scroll container safety limits, Safe Area/notch handling, and standard Image components.
+  - Exporting missing icons from Figma and registering them in assets.
 
 ### 4. [fix-screen-ui](./fix-screen-ui/SKILL.md)
 * **Purpose**: Spacing and styling alignment checklist.
@@ -35,6 +36,7 @@ Before starting work, read this directory to identify the appropriate skill file
   - Color and typography mapping verification.
   - Spacing audits using mathematical bounding box calculations (`gap = next.y - (prev.y + prev.height)`).
   - Image padding checks and screenshot comparisons (`save_screenshots`).
+  - Exporting missing icons from Figma and registering them in assets.
 
 ### 5. [fe-perfect-pixel](./fe-perfect-pixel/SKILL.md)
 * **Purpose**: In-depth visual and mathematical property comparison.
@@ -42,6 +44,7 @@ Before starting work, read this directory to identify the appropriate skill file
   - Deep coordinate matching and horizontal/vertical margins.
   - Native platform typography parsing limit warnings (using explicit Tailwind sizes and Poppins family or `ThemeTypography` styles to avoid system font fallbacks).
   - Conflicting utility checks (e.g., forbidding `text-caption-2` with `font-poppins-regular`).
+  - Exporting missing icons and registering them during pixel-perfect alignment.
 
 ### 6. [fe-integrate-api](./fe-integrate-api/SKILL.md)
 * **Purpose**: Network layers, async query state management, and strict typings.

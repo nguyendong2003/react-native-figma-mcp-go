@@ -34,6 +34,7 @@ To make a screen pixel-perfect, you must extract and map the following details u
   - Check the horizontal alignment: centered, stretched, or fixed offsets from left/right margins.
   - Check the vertical spacing: always compute the vertical gap between consecutive elements mathematically using bounding boxes: `gap = next.y - (prev.y + prev.height)`. Never estimate spacing; calculate it down to the exact pixel.
 - **Image/Icon Asset Padding**: Check for transparent padding inside image/icon PNG/SVG assets (using Python scripts to find the non-transparent bounding box). If the asset has transparent padding, its visual dimensions will be smaller than its bounding box. You must adjust its layout or margins, or crop the image to ensure pixel-perfect matching.
+- **Exporting Missing Icons**: If an icon is missing in `assets/icons/`, export it from Figma using the `save_screenshots` tool (recommending SVG or PNG format) and save it to `assets/icons/`. Once exported, register it inside `src/constants/assets.ts` and apply spacing/padding adjustments.
 
 ### B. Typography Details
 - **Font Specifications**: Inspect typography styles using `get_styles` or looking at the node properties. Look for:
