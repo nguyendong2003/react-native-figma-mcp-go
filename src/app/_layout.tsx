@@ -141,6 +141,18 @@ export default function RootLayout() {
           >['options']
         }
       />
+      <Stack.Screen
+        name='account-management'
+        options={
+          {
+            title: 'Management',
+            headerTheme: 'white',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
     </Stack>
   );
 }
