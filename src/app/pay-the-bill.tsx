@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import '@/global.css';
 import { IconAssets } from '@/constants/assets';
 import { BillCategoryCard } from '@/components/pay-the-bill/BillCategoryCard';
@@ -33,8 +34,12 @@ export default function PayTheBillScreen() {
     },
   ];
 
-  const handlePayBill = (title: string) => {
-    Alert.alert('Payment initiated', `Redirecting to payment gateway for your ${title}.`);
+  const handlePayBill = (id: string, title: string) => {
+    if (id === 'internet') {
+      router.push('/internet-bill');
+    } else {
+      Alert.alert('Payment initiated', `Redirecting to payment gateway for your ${title}.`);
+    }
   };
 
   return (
@@ -55,7 +60,7 @@ export default function PayTheBillScreen() {
               title={bill.title}
               description={bill.description}
               iconSource={bill.icon}
-              onPress={() => handlePayBill(bill.title)}
+              onPress={() => handlePayBill(bill.id, bill.title)}
               className={index < bills.length - 1 ? 'mb-[20px]' : ''}
             />
           ))}

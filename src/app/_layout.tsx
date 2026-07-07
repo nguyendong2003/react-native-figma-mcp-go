@@ -117,6 +117,30 @@ export default function RootLayout() {
           >['options']
         }
       />
+      <Stack.Screen
+        name='payment-history'
+        options={
+          {
+            title: 'Payment history',
+            headerTheme: 'white',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
+      <Stack.Screen
+        name='internet-bill'
+        options={
+          {
+            title: 'Internet bill',
+            headerTheme: 'white',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
     </Stack>
   );
 }

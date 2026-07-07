@@ -21,6 +21,22 @@ export default function App() {
         </Pressable>
       </Link>
 
+      <Link href='/payment-history' asChild>
+        <Pressable className='w-64 bg-primary-3 py-3 px-8 rounded-2xl shadow-card-1 active:bg-primary-2 items-center'>
+          <Text className='text-primary-1 text-title-3 font-semibold'>
+            Go to Payment History Screen
+          </Text>
+        </Pressable>
+      </Link>
+
+      <Link href='/internet-bill' asChild>
+        <Pressable className='w-64 bg-primary-3 py-3 px-8 rounded-2xl shadow-card-1 active:bg-primary-2 items-center'>
+          <Text className='text-primary-1 text-title-3 font-semibold'>
+            Go to Internet Bill Screen
+          </Text>
+        </Pressable>
+      </Link>
+
       <Link href='/component-catalog' asChild>
         <Pressable className='w-64 bg-primary-3 py-3 px-8 rounded-2xl shadow-card-1 active:bg-primary-2 items-center'>
           <Text className='text-primary-1 text-title-3 font-semibold'>
