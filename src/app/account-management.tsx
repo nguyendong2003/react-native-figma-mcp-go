@@ -62,7 +62,8 @@ export default function AccountManagementScreen() {
               className="active:opacity-60"
             >
               <Image
-                source={IconAssets.tabSearchInactive}
+                source={IconAssets.search}
+                style={{ width: 20, height: 20 }}
                 className="w-5 h-5"
                 resizeMode="contain"
                 tintColor={isSearchActive ? '#3629b7' : '#343434'}
@@ -91,7 +92,8 @@ export default function AccountManagementScreen() {
                 containerClassName="mb-6 w-full max-w-[420px]"
                 leftIcon={
                   <Image
-                    source={IconAssets.tabSearchInactive}
+                    source={IconAssets.search}
+                    style={{ width: 16, height: 16 }}
                     className="w-4 h-4"
                     resizeMode="contain"
                     tintColor="#CACACA"

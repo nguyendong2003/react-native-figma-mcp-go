@@ -27,6 +27,7 @@ export const IconAssets = {
   waterBill: require('@/assets/icons/water_bill.png'),
   mobileBill: require('@/assets/icons/mobile_bill.png'),
   internetBill: require('@/assets/icons/internet_bill.png'),
+  search: require('@/assets/icons/search.png'),
 } as const;
 
 export const ImageAssets = {

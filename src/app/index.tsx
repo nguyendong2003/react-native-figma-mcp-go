@@ -52,6 +52,14 @@ export default function App() {
           </Text>
         </Pressable>
       </Link>
+
+      <Link href='/beneficiary' asChild>
+        <Pressable className='w-64 bg-primary-3 py-3 px-8 rounded-2xl shadow-card-1 active:bg-primary-2 items-center'>
+          <Text className='text-primary-1 text-title-3 font-semibold'>
+            Go to Beneficiary Screen
+          </Text>
+        </Pressable>
+      </Link>
     </View>
   );
 }

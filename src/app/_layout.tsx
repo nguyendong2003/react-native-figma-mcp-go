@@ -51,6 +51,7 @@ export default function RootLayout() {
                   router.replace('/');
                 }
               }}
+              rightIcon={options.headerRight?.({ tintColor: theme === 'white' ? '#343434' : '#FFFFFF' })}
             />
           );
         },
@@ -146,6 +147,18 @@ export default function RootLayout() {
         options={
           {
             title: 'Management',
+            headerTheme: 'white',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
+      <Stack.Screen
+        name='beneficiary'
+        options={
+          {
+            title: 'Beneficiary',
             headerTheme: 'white',
             headerShown: true,
           } as CustomScreenOptions as React.ComponentProps<
