@@ -82,13 +82,8 @@ export default function SignInScreen() {
   };
 
   const handleForgotPassword = () => {
-    Alert.alert(
-      'Forgot Password',
-      'Mock: Redirecting to password reset flow...',
-    );
+    router.push('/forgot-password');
   };
-
-
 
   // Enable button only if both fields are filled and have no current errors
   const canSubmit =
@@ -116,8 +111,8 @@ export default function SignInScreen() {
           <View className='flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-6 pb-8 shadow-card-1'>
             {/* Header Titles (Top padding is 24px, gap to subtitle is 4px) */}
             <View>
-              <Text className='text-[24px] leading-[28px] font-poppins-semibold text-primary-1'>Welcome Back</Text>
-              <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-1 mt-[4px]'>
+              <Text className='text-title-1 text-primary-1'>Welcome Back</Text>
+              <Text className='text-caption-2 text-neutral-1 mt-[4px]'>
                 Hello there, sign in to continue
               </Text>
             </View>
@@ -158,10 +153,10 @@ export default function SignInScreen() {
               {/* Forgot Password Link (12px top gap, 40px bottom gap) */}
               <Pressable
                 onPress={handleForgotPassword}
-                className='self-end mt-[12px] mb-[40px]'
+                className='self-end mt-[12px] mb-[40px] mr-[2px]'
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
-                <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-4 active:text-primary-1'>
+                <Text className='text-caption-2 text-neutral-4 active:text-primary-1'>
                   Forgot your password ?
                 </Text>
               </Pressable>
@@ -182,18 +177,19 @@ export default function SignInScreen() {
               />
 
               {/* Sign Up Footer Link */}
-              <View className='flex-row justify-center items-center gap-[12px]'>
+              <View className='flex-row justify-center items-center gap-[8px]'>
                 <Text className='text-[12px] leading-[16px] font-poppins-regular text-neutral-1'>
                   {"Don't have an account? "}
                 </Text>
-                <Pressable
-                  onPress={() => router.push('/sign-up')}
-                  hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                >
-                  <Text className='text-[12px] leading-[16px] font-poppins-semibold text-primary-1 active:text-primary-2'>
-                    Sign Up
-                  </Text>
-                </Pressable>
+                <Link href='/sign-up' asChild>
+                  <Pressable
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    <Text className='text-[12px] leading-[16px] font-poppins-semibold text-primary-1 active:text-primary-2'>
+                      Sign Up
+                    </Text>
+                  </Pressable>
+                </Link>
               </View>
             </View>
           </View>

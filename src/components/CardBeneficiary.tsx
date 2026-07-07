@@ -8,6 +8,7 @@ export interface CardBeneficiaryProps {
   type?: 'user' | 'add-new';
   onPress?: () => void;
   className?: string;
+  style?: any;
 }
 
 export function CardBeneficiary({
@@ -16,27 +17,32 @@ export function CardBeneficiary({
   type = 'user',
   onPress,
   className = '',
+  style,
 }: CardBeneficiaryProps) {
+  const isAddNew = type === 'add-new';
+
   return (
     <Pressable
       onPress={onPress}
-      className={`w-[100px] h-[120px] bg-neutral-6 rounded-[15px] items-center justify-center border border-neutral-5 shadow-card-2 active:bg-neutral-5/20 ${className}`}
+      style={style}
+      className={`w-[100px] h-[120px] bg-neutral-6 rounded-[15px] border border-neutral-5 shadow-card-2 active:bg-neutral-5/20 ${
+        isAddNew 
+          ? 'items-center justify-center' 
+          : 'items-center justify-between pt-[16px] pb-[11px] px-4'
+      } ${className}`}
     >
-      {type === 'add-new' ? (
-        <View className="items-center justify-center">
-          <View className="w-[60px] h-[60px] rounded-full bg-primary-4 items-center justify-center mb-1.5">
-            <Image
-              source={IconAssets.plus}
-              className="w-6 h-6"
-              resizeMode="contain"
-              tintColor="#3629B7"
-            />
-          </View>
-          <Text className="text-caption-2 text-primary-1 font-semibold">Add new</Text>
+      {isAddNew ? (
+        <View className="w-[60px] h-[60px] rounded-full bg-primary-4 items-center justify-center">
+          <Image
+            source={IconAssets.plus}
+            className="w-6 h-6"
+            resizeMode="contain"
+            tintColor="#3629B7"
+          />
         </View>
       ) : (
-        <View className="items-center justify-center w-full px-2">
-          <View className="w-[60px] h-[60px] rounded-full bg-primary-4 overflow-hidden mb-1.5 justify-center items-center">
+        <>
+          <View className="w-[60px] h-[60px] rounded-full bg-primary-4 overflow-hidden justify-center items-center">
             {avatarSource ? (
               <Image source={avatarSource} className="w-full h-full" resizeMode="cover" />
             ) : (
@@ -44,13 +50,13 @@ export function CardBeneficiary({
             )}
           </View>
           <Text 
-            className="text-body-3 text-neutral-1 font-medium text-center w-full"
+            className="font-poppins-medium text-[14px] leading-[21px] text-neutral-1 text-center w-full"
             numberOfLines={1}
             ellipsizeMode="tail"
           >
             {name}
           </Text>
-        </View>
+        </>
       )}
     </Pressable>
   );

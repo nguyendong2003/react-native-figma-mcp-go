@@ -1,6 +1,6 @@
 import { NavigationBar } from '@/components/NavigationBar';
-import { Stack, router } from 'expo-router';
 import { useFonts } from 'expo-font';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
@@ -15,11 +15,11 @@ export interface CustomScreenOptions {
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    'Poppins-Regular': require('../../assets/fonts/Poppins/Poppins-Regular.ttf'),
-    'Poppins-Medium': require('../../assets/fonts/Poppins/Poppins-Medium.ttf'),
-    'Poppins-SemiBold': require('../../assets/fonts/Poppins/Poppins-SemiBold.ttf'),
-    'Poppins-Bold': require('../../assets/fonts/Poppins/Poppins-Bold.ttf'),
-    'Poppins-Light': require('../../assets/fonts/Poppins/Poppins-Light.ttf'),
+    'Poppins-Regular': require('@/assets/fonts/Poppins/Poppins-Regular.ttf'),
+    'Poppins-Medium': require('@/assets/fonts/Poppins/Poppins-Medium.ttf'),
+    'Poppins-SemiBold': require('@/assets/fonts/Poppins/Poppins-SemiBold.ttf'),
+    'Poppins-Bold': require('@/assets/fonts/Poppins/Poppins-Bold.ttf'),
+    'Poppins-Light': require('@/assets/fonts/Poppins/Poppins-Light.ttf'),
   });
 
   useEffect(() => {
@@ -75,6 +75,18 @@ export default function RootLayout() {
           {
             title: 'Sign up',
             headerTheme: 'black',
+            headerShown: true,
+          } as CustomScreenOptions as React.ComponentProps<
+            typeof Stack.Screen
+          >['options']
+        }
+      />
+      <Stack.Screen
+        name='forgot-password'
+        options={
+          {
+            title: 'Forgot password',
+            headerTheme: 'white',
             headerShown: true,
           } as CustomScreenOptions as React.ComponentProps<
             typeof Stack.Screen

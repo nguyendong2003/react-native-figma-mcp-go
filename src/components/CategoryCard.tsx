@@ -7,6 +7,7 @@ export interface CategoryCardProps {
   variant?: 'primary' | 'secondary';
   onPress?: () => void;
   className?: string;
+  style?: any;
   width?: number;
   height?: number;
 }
@@ -17,23 +18,24 @@ export function CategoryCard({
   variant = 'secondary',
   onPress,
   className = '',
+  style,
   width,
   height = 100,
 }: CategoryCardProps) {
   const isPrimary = variant === 'primary';
-  const widthClass = width ? `w-[${width}px]` : 'flex-1 min-w-[100px] max-w-[120px]';
+  const cardWidth = width ?? (isPrimary ? 120 : 100);
 
   return (
     <Pressable
       onPress={onPress}
-      style={[{ height }]}
-      className={`${widthClass} rounded-[15px] p-4 justify-between border border-neutral-5 shadow-card-2 ${
+      style={[{ width: cardWidth, height }, style]}
+      className={`rounded-[15px] border border-neutral-5 shadow-card-2 ${
         isPrimary 
-          ? 'bg-primary-1 active:bg-primary-2' 
-          : 'bg-neutral-6 active:bg-neutral-5/10'
+          ? 'bg-primary-1 active:bg-primary-2 items-start p-4 justify-between' 
+          : 'bg-neutral-6 active:bg-neutral-5/10 items-center pt-4 pb-3 px-4 justify-between'
       } ${className}`}
     >
-      <View className="h-7 w-7 justify-center items-center">
+      <View className="w-7 h-7 justify-center items-center">
         {iconSource && (
           <Image
             source={iconSource}
@@ -44,9 +46,8 @@ export function CategoryCard({
         )}
       </View>
       <Text
-        style={{ fontSize: 12, lineHeight: 16 }}
-        className={`font-medium text-left ${
-          isPrimary ? 'text-neutral-6' : 'text-neutral-3'
+        className={`font-poppins-medium text-[12px] leading-[16px] ${
+          isPrimary ? 'text-neutral-6 text-left' : 'text-neutral-3 text-center w-full'
         }`}
         numberOfLines={2}
       >

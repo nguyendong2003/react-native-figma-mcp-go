@@ -1,6 +1,6 @@
 import { IconAssets } from '@/constants/assets';
 import React from 'react';
-import { Image, Pressable, Text, View, StatusBar } from 'react-native';
+import { Image, Pressable, StatusBar, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export interface NavigationBarProps {
@@ -28,10 +28,14 @@ export function NavigationBar({
         isWhiteBg ? 'bg-neutral-6' : 'bg-primary-1'
       } ${className}`}
     >
-      <StatusBar barStyle={isWhiteBg ? 'dark-content' : 'light-content'} backgroundColor="transparent" translucent />
-      
+      <StatusBar
+        barStyle={isWhiteBg ? 'dark-content' : 'light-content'}
+        backgroundColor='transparent'
+        translucent
+      />
+
       {/* 28px height inner row centered vertically along y=39 (which is 14px from bottom of 53px parent) */}
-      <View className="w-full h-[28px] flex-row items-center justify-between mb-0">
+      <View className='w-full h-[28px] flex-row items-center justify-between mb-0'>
         {/* Left button (Back) */}
         {onBackPress && (
           <Pressable
@@ -51,7 +55,7 @@ export function NavigationBar({
 
         {/* Left-aligned Title */}
         <Text
-          className={`text-[20px] leading-[28px] font-poppins-semibold text-left flex-1 ${
+          className={`text-title-2 text-left flex-1 ${
             onBackPress ? 'ml-4' : ''
           } ${isWhiteBg ? 'text-neutral-1' : 'text-neutral-6'}`}
           numberOfLines={1}

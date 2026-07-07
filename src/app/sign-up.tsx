@@ -75,12 +75,16 @@ export default function SignUpScreen() {
       // Simulate API Sign-up call
       setTimeout(() => {
         setIsLoading(false);
-        Alert.alert('Success', `Account created successfully for ${name}! Please sign in.`, [
-          {
-            text: 'OK',
-            onPress: () => router.replace('/sign-in'),
-          },
-        ]);
+        Alert.alert(
+          'Success',
+          `Account created successfully for ${name}! Please sign in.`,
+          [
+            {
+              text: 'OK',
+              onPress: () => router.replace('/sign-in'),
+            },
+          ],
+        );
       }, 1500);
     }
   };
@@ -118,13 +122,13 @@ export default function SignUpScreen() {
           showsVerticalScrollIndicator={false}
         >
           {/* Main White Content Sheet */}
-          <View className='flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-6 pb-8 shadow-card-1'>
+          <View className='flex-1 bg-neutral-6 rounded-t-[30px] px-6 pt-[23px] pb-[47px] shadow-card-1'>
             {/* Header Titles (Top padding is 24px, gap to subtitle is 4px) */}
             <View>
-              <Text className='text-[24px] leading-[28px] font-poppins-semibold text-primary-1'>
+              <Text className='text-title-1 text-primary-1 tracking'>
                 Welcome to us,
               </Text>
-              <Text className='text-[12px] leading-[16px] font-poppins-medium text-neutral-1 mt-[4px]'>
+              <Text className='text-caption-2 text-neutral-1 mt-[5px] ml-[3px]'>
                 Hello there, create New account
               </Text>
             </View>
@@ -181,7 +185,7 @@ export default function SignUpScreen() {
               {/* Terms and Conditions Checkbox (20px top gap, 32px bottom gap) */}
               <Pressable
                 onPress={() => setAgreeTerms(!agreeTerms)}
-                className='flex-row items-center gap-[12px] mb-[32px] w-full'
+                className='flex-row items-start gap-[12px] mb-[32px] w-full'
                 hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               >
                 <View
@@ -195,12 +199,20 @@ export default function SignUpScreen() {
                     <View className='w-[10px] h-[6px] border-l-2 border-b-2 border-neutral-6 -rotate-45 -mt-0.5' />
                   )}
                 </View>
-                <Text className='text-[12px] leading-[16px] font-poppins-regular text-neutral-1 flex-1'>
-                  {'By creating an account your aggree\nto our  '}
-                  <Text className='font-poppins-semibold text-primary-1'>
-                    Term and Condtions
+                <View>
+                  <Text className='text-[14px] leading-[16px] font-poppins-regular text-neutral-1 flex-1'>
+                    {'By creating an account your aggree  '}
+                    {/* <Text className='font-poppins-semibold text-primary-1'>
+                    Terms and Conditions
+                  </Text> */}
                   </Text>
-                </Text>
+                  <Text className='text-[14px] leading-[16px] font-poppins-regular text-neutral-1 flex-1 mt-[5px]'>
+                    {'to our '}
+                    <Text className='font-poppins-semibold text-primary-1 ml-[2px]'>
+                      Term and Conditions
+                    </Text>
+                  </Text>
+                </View>
               </Pressable>
 
               {/* Sign Up Button (32px bottom gap) */}
@@ -209,7 +221,7 @@ export default function SignUpScreen() {
                 onPress={handleSignUp}
                 disabled={!canSubmit}
                 isLoading={isLoading}
-                className='w-full mb-[32px]'
+                className='w-full mb-[32px] mt-[3px]'
               />
 
               {/* Sign In Footer Link */}

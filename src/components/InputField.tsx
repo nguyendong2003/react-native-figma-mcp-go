@@ -1,3 +1,4 @@
+import { IconAssets } from '@/constants/assets';
 import React, { useState } from 'react';
 import {
   Image,
@@ -9,7 +10,6 @@ import {
   TextInputProps,
   View,
 } from 'react-native';
-import { IconAssets } from '@/constants/assets';
 
 export interface InputFieldProps extends TextInputProps {
   label?: string;
@@ -79,7 +79,7 @@ export function InputField({
         )}
 
         <TextInput
-          className={`flex-1 text-[14px] leading-[21px] font-poppins-medium text-neutral-1 h-full p-0 ${className}`}
+          className={`flex-1 text-body-3 text-neutral-1 h-full p-0 ${className}`}
           placeholderTextColor='#CACACA' // Neutral 4
           secureTextEntry={isSecure}
           onFocus={handleFocus}
